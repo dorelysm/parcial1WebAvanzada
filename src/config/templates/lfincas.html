@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{%  block content %}
+<h1>
+    Bienvenid@ {{usuario}} <a href="/cerrar" class="btn btn-danger"> Salir</a>
+</h1>
+
+{% include('modal.html') %}
+<a href="\lcultivos" class="btn btn-primary">Ver cultivos</a>
+<a href="\lventas" class="btn btn-primary">Ver ventas</a>
+<a href="\lfincas" class="btn btn-primary">Ver fincas</a>
+<a href="\llotes" class="btn btn-primary">Ver lotes</a>
+
+<a onclick="cargar_formulario()" class="btn btn-success"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">Agregar finca</a>
+
+<h2>Fincas</h2>
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Finca</th>
+        <th scope="col">Nit</th>
+        <th scope="col">Dirección</th>
+        <th scope="col">Contacto</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Propietario</th>
+      </tr>
+    </thead>
+    <tbody>
+            {% for item in fincas %}
+            <tr>
+                <th scope="row">{{item.nombre}}</th>
+                <td>{{item.nit}}</td>
+                <td>{{item.direccion}}</td>
+                <td>{{item.contacto}}</td>
+                <td>{{item.correo}}</td>
+                <td>{{item.propietario}}</td>
+            </tr>
+            {% endfor %}
+    </tbody>
+  </table>
+
+  <script>
+    function cargar_formulario(){
+        const formulario = `
+                <form action="/guardar_finca" method="POST">
+                  <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Nombre de la finca:</label>
+                    <input type="text" class="form-control" name="nombre"  value="">
+                  </div>
+                  <div class="form-group">
+                    <label for="message-text" class="col-form-label">Dirección:</label>
+                    <input type="text" class="form-control" name="direccion"  value="">
+                  </div>
+                  <div class="form-group">
+                    <label for="message-text" class="col-form-label">Contacto:</label>
+                    <input type="text" class="form-control" name="contacto"  value="">
+                  </div>
+                  <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Correo:</label>
+                    <input type="text" class="form-control" name="correo"  value="">
+                  </div>
+                  <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Propietario:</label>
+                    <input type="text" class="form-control" name="propietario"  value="">
+                  </div>
+                  <div class="modal-footer">
+                    <button  type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+                </form> 
+        `;
+        $("#fromartc").html(formulario);
+    }
+    
+    
+ </script>
+
+
+
+{% endblock %}

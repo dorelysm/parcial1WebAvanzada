@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+{%  block content %}
+<h1>
+    Bienvenid@ {{usuario}} <a href="/cerrar" class="btn btn-danger"> Salir</a>
+</h1>
+
+{% include('modal.html') %}
+<a href="\lcultivos" class="btn btn-primary">Ver cultivos</a>
+<a href="\lventas" class="btn btn-primary">Ver ventas</a>
+<a href="\lfincas" class="btn btn-primary">Ver fincas</a>
+<a href="\llotes" class="btn btn-primary">Ver lotes</a>
+
+<a onclick="cargar_formulario()" class="btn btn-success"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">Agregar Lote</a>
+
+<h2>Lotes</h2>
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Número de lote</th>
+        <th scope="col">Nit de la finca</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Id del responsable</th>
+      </tr>
+    </thead>
+    <tbody>
+            {% for item in lotes %}
+            <tr>
+                <th scope="row">{{item.num_lote}}</th>
+                <td>{{item.nit_finca}}</td>
+                <td>{{item.nombre}}</td>
+                <td>{{item.responsable}}</td>
+            </tr>
+            {% endfor %}
+    </tbody>
+  </table>
+
+  <script>
+    function cargar_formulario(){
+        const formulario = `
+                <form action="/guardar_lote" method="POST">
+                  <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Nit de la finca:</label>
+                    <select class="form-control" type="text" value="nit_finca">
+                      {% for i in fincas %}
+                      <option value='{{i.nit}}'>{{i.nit}}</option>
+                      {% endfor %}
+                      </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="message-text" class="col-form-label">Nombre del lote:</label>
+                    <input type="text" class="form-control" name="nombre"  value="">
+                  </div>
+                  <div class="form-group">
+                    <label for="message-text" class="col-form-label">Id del responsable:</label>
+                    <select class="form-control" type="text" value="id_responsable">
+                      {% for i in responsables %}
+                      <option>{{i.id}}</option>
+                      {% endfor %}
+                      </select>
+                  </div>
+                  <div class="modal-footer">
+                    <button  type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+                </form> 
+        `;
+        $("#fromartc").html(formulario);
+    }
+    
+    
+ </script>
+
+{% endblock %}
